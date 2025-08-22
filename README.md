@@ -2,57 +2,33 @@
 - # [Laço Eterno - peça o seu laço sem sair de casa]
 
 ## 1) Problema
-<!-- Escreva o problema sem falar de telas/tecnologias.
-     Responda: Quem sofre? Onde? O que atrapalha? Por que isso importa?
-     EXEMPLO: Em aulas práticas, alunos esperam muito para serem atendidos.
-     Há filas confusas e frustração. O professor não vê ordem nem tempo de espera.
-     Objetivo inicial: organizar a fila para reduzir a espera e garantir justiça. -->
-[Quem], em [contexto], tem dificuldade em [tarefa/dor].
-Isso causa [efeito mensurável].
-No início, o foco será [público principal] com o objetivo de [resultado simples].
+
+Nos pedidos de laços, os clientes sofrem com a falta de clareza sobre a ordem das encomendas.
+Isso acontece no processo de produção e entrega, onde não há um controle visível.
+Essa dificuldade gera atrasos, insatisfação e desconfiança de quem compra.
+Importa porque a falta de organização afeta a confiança no trabalho e prejudica a experiência do cliente.
 
 ## 2) Atores e Decisores (quem usa / quem decide)
-<!-- Liste papéis (não nomes).
-     EXEMPLO:
-     Usuários principais: Alunos da turma de Desenvolvimento Web
-     Decisores/Apoiadores: Professores da disciplina; Coordenação do curso -->
-Usuários principais: [lista]
-Decisores/Apoiadores: [lista]
+
+Usuários principais: [ Os clientes que fazem encomenda o seu laço.]
+Decisores/Apoiadores: [Dono da loja; funcionarios que fazem as encomendas]
 
 ## 3) Casos de uso (de forma simples)
-<!-- Formato "Ator: ações que pode fazer".
-     DICA: Use "Manter (inserir, mostrar, editar, remover)" quando for CRUD.
-     EXEMPLO:
-     Todos: Logar/deslogar do sistema; Manter dados cadastrais
-     Professor: Manter (inserir, mostrar, editar, remover) todos os chamados
-     Aluno: Manter (inserir, mostrar, editar, remover) seus chamados -->
-Todos: [ações comuns, ex.: Logar/deslogar; Manter dados cadastrais]  
-[Ator 1]: [ações do ator 1]  
-[Ator 2]: [ações do ator 2]
+
+Todos: [ações comuns, ex.: Logar/deslogar; Manter dados cadastrais]  <!--- VER DPS A PARTE DE PAGAMENTO>
+[Fabricante ]: [ver, ter chat, atualizar, remover, entregar]  
+[Comprador  ]: [ver, comprar, entrar em contato,]
 
 ## 4) Limites e suposições
-<!-- Simples assim:
-     - Limites = regras/prazos/obrigações que você não controla.
-     - Suposições = coisas que você espera ter e podem falhar.
-     - Plano B = como você segue com a 1ª fatia se algo falhar.
-     EXEMPLO:
-     Limites: entrega final até o fim da disciplina (ex.: 2025-11-30); rodar no navegador; sem serviços pagos.
-     Suposições: internet no laboratório; navegador atualizado; acesso ao GitHub; 10 min para teste rápido.
-     Plano B: sem internet → rodar local e salvar em arquivo/LocalStorage; sem tempo do professor → testar com 3 colegas. -->
-Limites: [prazo final], [regras/tecnologias obrigatórias], [restrições]  
-Suposições: [internet/navegador/GitHub/tempo de teste]  
-Plano B: [como continua entregando a 1ª fatia se algo falhar]
+
+Limites: entrega final até o fim da disciplina e conseguir encomedar o laço. 
+Suposições: [O pedido ser incopativel, e ocorrer atrasos na entrega.]  
+Plano B: [Para resolver, seria de forma no chat.]
 
 ## 5) Hipóteses + validação
-<!-- Preencha as duas frases abaixo. Simples e direto.
-     EXEMPLO Valor: Se o aluno ver sua posição na fila, sente mais controle e conclui melhor a atividade.
-     Validação: teste com 5 alunos; sucesso se ≥4 abrem/fecham chamado sem ajuda.
-     EXEMPLO Viabilidade: Com app no navegador (HTML/CSS/JS + armazenamento local),
-     criar e listar chamados responde em até 1 segundo na maioria das vezes (ex.: 9 de cada 10).
-     Validação: medir no protótipo com 30 ações; meta: pelo menos 27 de 30 ações (9/10) em 1s ou menos. -->
-H-Valor: Se [X], então [Y] melhora em [critério].  
-Validação (valor): [teste rápido/observação]; alvo: [meta simples].
 
+H-Valor: Se o cliente conseguir ver a posição da sua encomenda de laço na fila, então a satisfação melhora em clareza e confiança no prazo de entrega.
+Validação (valor): teste com 5 clientes reais; alvo: pelo menos 4 em 5 relatam sentir mais segurança e menos ansiedade sobre o pedido
 H-Viabilidade: Com [tecnologia], [ação/tela] leva até [n] s.  
 Validação (viabilidade): [medição no protótipo]; meta: [n] s ou menos na maioria das vezes (ex.: 9/10).
 

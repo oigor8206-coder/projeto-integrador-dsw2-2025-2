@@ -105,13 +105,28 @@ Critérios de aceite:
 | dataCriacao     | data/hora                     | sim         | 2025-08-20 14:30   |
 | dataAtualizacao | data/hora                     | sim         | 2025-08-20 15:10   |
 
-### Chamado
+### Encomenda
 | Campo           | Tipo               | Obrigatório | Exemplo                 |
 |-----------------|--------------------|-------------|-------------------------|
 | id              | número             | sim         | 2                       |
-| Usuario_id      | número (fk)        | sim         | 8f3a-...                |
-| texto           | texto              | sim         | "Erro ao compilar"      |
-| estado          | char               | sim         | 'a' \| 'f'              |
+| Usuario_id      | número (fk)        | sim         | 1                       |
+| Material        | char               | sim         | 'couro'                 |
+| Chumbo          | char               | sim         | '5'                     |
+| Peso laço       | numerico           | não         | 700,5                   |
+| Cor             | texto              | sim         | azul                    |
+| dataCriacao     | data/hora          | sim         | 2025-08-20 14:35        |
+| dataAtualizacao | data/hora          | sim         | 2025-08-20 14:50        |
+
+
+### Encomenda
+| Campo           | Tipo               | Obrigatório | Exemplo                 |
+|-----------------|--------------------|-------------|-------------------------|
+| id              | número             | sim         | 2                       |
+| Usuario_id      | número (fk)        | sim         | 1                       |
+| Material        | char               | sim         | 'Ci' \| 'Co'  \|'Mo'    |
+| Chumbo          | char               | sim         | '5' \| '6' \| '7' \| '8'|
+| Peso laço       | numerico           | não         | 'a' \| 'f'              |
+| Cor             | texto              | sim         | 'a' \| 'f'              |
 | dataCriacao     | data/hora          | sim         | 2025-08-20 14:35        |
 | dataAtualizacao | data/hora          | sim         | 2025-08-20 14:50        |
 

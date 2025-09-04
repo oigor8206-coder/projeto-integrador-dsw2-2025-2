@@ -87,7 +87,7 @@ Critérios de aceite:
 <!-- EXEMPLO:
      - Usuario — pessoa que usa o sistema (aluno/professor)
      - Chamado — pedido de ajuda criado por um usuário -->
-- [Entidade 1] — [o que representa em 1 linha]
+- [Entidade 1] — [que representa em 1 linha]
 - [Entidade 2] — [...]
 - [Entidade 3] — [...]
 

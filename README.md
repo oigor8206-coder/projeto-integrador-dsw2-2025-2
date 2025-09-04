@@ -30,7 +30,7 @@ Plano B: [Para resolver, seria de forma no chat.]
 H-Valor: Se o cliente conseguir ver a posição da sua encomenda de laço na fila, então a satisfação melhora em clareza e confiança no prazo de entrega.
 Validação (valor): teste com 5 clientes reais; alvo: pelo menos 4 em 5 relatam sentir mais segurança e menos ansiedade sobre o pedido
 H-Viabilidade: Com [tecnologia], [ação/tela] leva até [n] s.  
-Validação (viabilidade): [medição no protótipo]; meta: [n] s ou menos na maioria das vezes (ex.: 9/10).
+Validação (viabilidade): [medição no protótipo]; meota: [n] s ou menos na maioria das vezes (ex.: 9/10).
 
 ## 6) Fluxo principal e primeira fatia
 <!-- Pense “Entrada → Processo → Saída”.

@@ -6,7 +6,7 @@
 -- Garante que o script possa ser executado várias vezes sem erros.
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS Encomenda;
-DROP TABLE IF EXISTS Usuario;
+DROP TABLE IF EXISTS Usuarios;
 
 -- -----------------------------------------------------
 -- Tabela Usuario

@@ -84,12 +84,8 @@ Critérios de aceite:
 <!-- Defina só o essencial para criar o banco depois. -->
 
 ### 9.1 Entidades
-<!-- EXEMPLO:
-     - Usuario — pessoa que usa o sistema (aluno/professor)
-     - Chamado — pedido de ajuda criado por um usuário -->
-- [Entidade 1] — [que representa em 1 linha]
-- [Entidade 2] — [...]
-- [Entidade 3] — [...]
+Usuario — pessoa que acessa o sistema, podendo ser protudor ou cliente.
+Encomenda — pedido personalizado de produto feito por um usuário.
 
 ### 9.2 Campos por entidade
 <!-- Use tipos simples: uuid, texto, número, data/hora, booleano, char. -->
@@ -123,16 +119,57 @@ Critérios de aceite:
 |-----------------|--------------------|-------------|-------------------------|
 | id              | número             | sim         | 2                       |
 | Usuario_id      | número (fk)        | sim         | 1                       |
-| Material        | char               | sim         | 'Ci' \| 'Co'  \|'Mo'    |
-| Chumbo          | char               | sim         | '5' \| '6' \| '7' \| '8'|
+| Material        | texto              | sim         | 'Ci' \| 'Co'  \|'Mo'    |
+| Chumbo          | numerico           | sim         | '5' \| '6' \| '7' \| '8'|
 | Peso laço       | numerico           | não         | 'a' \| 'f'              |
 | Cor             | texto              | sim         | 'a' \| 'f'              |
+| urlImagem       | texto              | sim         | '/img/incone.png'       |
 | dataCriacao     | data/hora          | sim         | 2025-08-20 14:35        |
 | dataAtualizacao | data/hora          | sim         | 2025-08-20 14:50        |
 
+
 ### 9.3 Relações entre entidades
-<!-- Frases simples bastam. EXEMPLO:
-     Um Usuario tem muitos Chamados (1→N).
-     Um Chamado pertence a um Usuario (N→1). -->
-- Um [A] tem muitos [B]. (1→N)
-- Um [B] pertence a um [A]. (N→1)
+
+Um cliente tem muitas encomenda (1→N)
+Uma encomenda pertence a um cliente (N→1)
+
+### 9.4 Modelagem do banco de dados no POSTGRES
+
+``` sql
+
+CREATE TABLE Usuarios (
+  id                SERIAL       NOT NULL PRIMARY KEY,
+  nome              VARCHAR(255) NOT NULL,
+  email             VARCHAR(255) NOT NULL UNIQUE,
+  senha_hash        VARCHAR(255) NOT NULL,
+  papel             SMALLINT     NOT NULL CHECK (papel IN (0,1)),  -- 0=aluno, 1=professor
+  data_criacao      TIMESTAMP    DEFAULT now(),
+  data_atualizacao  TIMESTAMP    DEFAULT now()
+);
+
+CREATE TABLE Chamados (
+  id                SERIAL       NOT NULL PRIMARY KEY,
+  Usuarios_id       BIGINT       NOT NULL REFERENCES Usuarios(id),
+  texto             VARCHAR(255) NOT NULL,
+  estado            CHAR(1)      NOT NULL CHECK (estado IN ('a','f')), -- a=aberto, f=fechado
+  urlImagem         VARCHAR(255),
+  data_criacao      TIMESTAMP    DEFAULT now(),
+  data_atualizacao  TIMESTAMP    DEFAULT now()
+);
+
+CREATE TABLE Encomenda (
+  id               SERIAL       NOT NULL PRIMARY KEY,
+  Usuario_id       BIGINT       NOT NULL REFERENCES Usuarios(id),
+  Material         CHAR(20)     NOT NULL,
+  Chumbo           CHAR(5)      NOT NULL,
+  Peso_laco        NUMERIC(10,2),
+  Cor              TEXT         NOT NULL,
+  urlImagem         VARCHAR(255),
+  dataCriacao      TIMESTAMP    DEFAULT now(),
+  dataAtualizacao  TIMESTAMP    DEFAULT now()
+);
+INSERT INTO Usuarios (nome, email, senha_hash, papel) VALUES('Usuário', 'user@user.com.br', '123', 0);
+INSERT INTO Usuarios (nome, email, senha_hash, papel) VALUES('Admin', 'admin@admin.com.br', '123', 1);
+
+INSERT INTO Encomenda (Usuario_id, Material, Chumbo, Peso_laco, Cor, urlImagem) VALUES (1, 'couro', '5', 700.5, 'azul', 'https://exemplo.com/imagem.jpg');
+```

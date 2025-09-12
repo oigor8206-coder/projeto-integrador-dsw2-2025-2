@@ -5,7 +5,7 @@
 -- Limpeza de Tabelas Existentes
 -- Garante que o script possa ser executado várias vezes sem erros.
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Encomenda;
+DROP TABLE IF EXISTS Encomendas;
 DROP TABLE IF EXISTS Usuarios;
 
 -- -----------------------------------------------------
@@ -26,7 +26,7 @@ CREATE TABLE Usuarios (
 -- Tabela Encomenda
 -- Armazena os detalhes das encomendas feitas pelos usuários.
 -- -----------------------------------------------------
-CREATE TABLE Encomenda (
+CREATE TABLE Encomendas (
   id SERIAL PRIMARY KEY, -- Identificador único para cada encomenda
   usuarios_id INT NOT NULL REFERENCES Usuarios(id), -- Chave estrangeira referenciando o usuário
   material VARCHAR(50) NOT NULL, -- Tipo de material da encomenda
@@ -57,8 +57,8 @@ INSERT INTO Usuarios (nome, email, senha_hash, papel) VALUES
 ('Marcos Andrade', 'marcos@exemplo.com', '$2a$10$hash_exemplo_12', 0);
 
 
--- Inserção na tabela Encomenda
-INSERT INTO Encomenda (usuarios_id, material, chumbo, peso_laco, cor) VALUES
+-- Inserção na tabela Encomendas
+INSERT INTO Encomendas (usuarios_id, material, chumbo, peso_laco, cor) VALUES
 (1, 'couro', '5', 700.50, 'azul'),
 (2, 'nylon', '3', 650.00, 'vermelho'),
 (1, 'sintético', '4', 680.75, 'preto'),

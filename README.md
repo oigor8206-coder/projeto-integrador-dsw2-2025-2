@@ -108,7 +108,7 @@ Encomenda — pedido personalizado de produto feito por um usuário.
 | Usuario_id      | número (fk)        | sim         | 1                       |
 | Material        | char               | sim         | 'couro'                 |
 | Chumbo          | char               | sim         | '5'                     |
-| Peso laço       | numerico           | não         | 700,5                   |
+| Peso laco       | numerico           | não         | 700,5                   |
 | Cor             | texto              | sim         | azul                    |
 | dataCriacao     | data/hora          | sim         | 2025-08-20 14:35        |
 | dataAtualizacao | data/hora          | sim         | 2025-08-20 14:50        |
@@ -121,7 +121,7 @@ Encomenda — pedido personalizado de produto feito por um usuário.
 | Usuario_id      | número (fk)        | sim         | 1                       |
 | Material        | texto              | sim         | 'Ci' \| 'Co'  \|'Mo'    |
 | Chumbo          | numerico           | sim         | '5' \| '6' \| '7' \| '8'|
-| Peso laço       | numerico           | não         | 'a' \| 'f'              |
+| Peso laco       | numerico           | não         | 'a' \| 'f'              |
 | Cor             | texto              | sim         | 'a' \| 'f'              |
 | urlImagem       | texto              | sim         | '/img/incone.png'       |
 | dataCriacao     | data/hora          | sim         | 2025-08-20 14:35        |

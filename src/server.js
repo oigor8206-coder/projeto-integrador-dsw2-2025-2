@@ -109,34 +109,33 @@ app.get("/api/encomendas/:id", async (req, res) => {
 });
 
 // -----------------------------------------------------------------------------
-// CRIAR (POST /produtos)
+// CRIAR (POST /encomendas)
 // -----------------------------------------------------------------------------
-// Objetivo: inserir um novo produto. Espera-se receber JSON com { nome, preco }.
+// Objetivo: inserir um nova encomendas. Espera-se receber JSON com { nome, preco }.
 // Observações:
 // - req.body pode ser "undefined" se o cliente não enviar JSON; por isso usamos "?? {}"
 //   para ter um objeto vazio como padrão (evita erro ao desestruturar).
-app.post("/produtos", async (req, res) => {
-    // Extraímos "nome" e "preco" do corpo. Se req.body for undefined, vira {}.
-    const { nome, preco } = req.body ?? {};
+app.post("/api/encomendas", async (req, res) => {
+    // Extraímos "id", "usuarios_id", "material", "chumbo",  "peso_laco", "cor", "data_criacao" e "data_atualizacao" do corpo. Se req.body for undefined, vira {}.
+    const { usuarios_id, material, chumbo,  peso_laco, cor } = req.body ?? {};
+    const user_id = Number(usuarios_id);
+    const c= Number(chumbo) 
+    const peso= Number(peso_laco)
 
-    // Convertendo "preco" em número. Se falhar, vira NaN.
-    const p = Number(preco);
-
-    // Validações:
-    // - !nome → nome ausente, vazio, null, etc. (falsy)
-    // - preco == null → captura especificamente null (e também undefined)
-    //   Observação: usamos == de propósito para cobrir null/undefined juntos.
-    // - Number.isNaN(p) → conversão falhou (ex.: "abc")
-    // - p < 0 → preço negativo não é permitido
-    if (!nome || preco == null || Number.isNaN(p) || p < 0) {
+if (!material || typeof(material) !== 'string' ||
+        !cor || typeof(cor) !== 'string' ||
+        usuarios_id == null || Number.isNaN(user_id) || user_id < 1 ||
+        chumbo == null || Number.isNaN(c) || c < 0 ||
+        peso_laco == null || Number.isNaN(peso) || peso < 0) 
+        {
         return res.status(400).json({ erro: "nome e preco (>= 0) obrigatórios" });
     }
 
     try {
         // INSERT com retorno: RETURNING * devolve a linha criada.
         const { rows } = await pool.query(
-            "INSERT INTO produtos (nome, preco) VALUES ($1, $2) RETURNING *",
-            [nome, p]
+            "INSERT INTO encomendas (usuarios_id, material, chumbo,  peso_laco, cor) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+            [user_id, material, c, peso, cor]
         );
 
         // rows[0] contém o objeto recém-inserido (com id gerado, etc.)
@@ -147,27 +146,41 @@ app.post("/produtos", async (req, res) => {
 });
 
 // -----------------------------------------------------------------------------
-// SUBSTITUIR (PUT /produtos/:id)
+// SUBSTITUIR (PUT /encomendas/:id)
 // -----------------------------------------------------------------------------
-// Objetivo: substituir TODOS os campos do produto (put = envia o recurso completo).
+// Objetivo: substituir TODOS os campos do encomendas (put = envia o recurso completo).
 // Requer: { nome, preco } válidos.
-app.put("/produtos/:id", async (req, res) => {
+app.put("/api/encomendas/:id", async (req, res) => {
     const id = Number(req.params.id);
-    const { nome, preco } = req.body ?? {};
-    const p = Number(preco);
-
+    const { usuarios_id, material, chumbo,  peso_laco, cor } = req.body ?? {};
+    const user_id = Number(usuarios_id);
+    const c= Number(chumbo) 
+    const peso= Number(peso_laco)
+    
     if (!Number.isInteger(id) || id <= 0) {
         return res.status(400).json({ erro: "id inválido" });
     }
-    if (!nome || preco == null || Number.isNaN(p) || p < 0) {
+    if (!material || typeof(material) !== 'string' ||
+        !cor || typeof(cor) !== 'string' ||
+        usuarios_id == null || Number.isNaN(user_id) || user_id < 1 ||
+        chumbo == null || Number.isNaN(c) || c < 0 ||
+        peso_laco == null || Number.isNaN(peso) || peso < 0) 
+        {
         return res.status(400).json({ erro: "nome e preco (>= 0) obrigatórios" });
     }
 
     try {
         // Atualiza ambos os campos sempre (sem manter valores antigos).
         const { rows } = await pool.query(
-            "UPDATE produtos SET nome = $1, preco = $2 WHERE id = $3 RETURNING *",
-            [nome, p, id]
+            'UPDATE encomendas SET 
+            usuarios_id= $1
+            material= $2
+            chumbo= $3  
+            peso_laco= $4
+            cor= $5
+            WHERE id = $6
+            RETURNING *',
+            [usuarios_id, material, chumbo,  peso_laco, cor]
         );
 
         // Se não atualizou nenhuma linha, o id não existia.

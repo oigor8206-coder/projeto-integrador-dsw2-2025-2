@@ -30,7 +30,7 @@ CREATE TABLE Encomendas (
   id SERIAL PRIMARY KEY, -- Identificador único para cada encomenda
   usuarios_id INT NOT NULL REFERENCES Usuarios(id), -- Chave estrangeira referenciando o usuário
   material VARCHAR(50) NOT NULL, -- Tipo de material da encomenda
-  chumbo VARCHAR(10) NOT NULL, -- Especificação do chumbo
+  chumbo INT NOT NULL, -- Especificação do chumbo
   peso_laco DECIMAL(10, 2), -- Peso do laço, campo opcional
   cor VARCHAR(50) NOT NULL, -- Cor do produto encomendado
   data_criacao TIMESTAMP DEFAULT NOW(), -- Data de criação com fuso horário
@@ -59,23 +59,23 @@ INSERT INTO Usuarios (nome, email, senha_hash, papel) VALUES
 
 -- Inserção na tabela Encomendas
 INSERT INTO Encomendas (usuarios_id, material, chumbo, peso_laco, cor) VALUES
-(1, 'couro', '5', 700.50, 'azul'),
-(2, 'nylon', '3', 650.00, 'vermelho'),
-(1, 'sintético', '4', 680.75, 'preto'),
-(3, 'camurça', '6', 710.00, 'marrom'),
-(4, 'couro', '5', 720.50, 'preto'),
-(1, 'nylon', '2', 620.00, 'rosa'),
-(5, 'sintético', '4', 690.25, 'branco'),
-(2, 'couro', '6', 730.00, 'vinho'),
-(6, 'nylon', '3', 655.50, 'verde'),
-(4, 'sintético', '5', 705.00, 'cinza'),
-(7, 'couro trançado', '5', 715.20, 'bege'),
-(8, 'nylon reforçado', '4', 670.00, 'laranja'),
-(9, 'sintético premium', '6', 725.00, 'dourado'),
-(10, 'couro', '3', 685.80, 'prata'),
-(11, 'nylon', '5', 695.00, 'roxo'),
-(12, 'camurça', '4', 702.10, 'amarelo'),
-(3, 'sintético', '5', 699.00, 'turquesa'),
-(5, 'couro', '6', 740.50, 'grafite'),
-(8, 'nylon', '2', 630.00, 'magenta'),
-(1, 'sintético', '4', 682.00, 'preto fosco');
+(1, 'couro', 5, 700.50, 'azul'),
+(2, 'nylon', 3, 650.00, 'vermelho'),
+(1, 'sintético', 4, 680.75, 'preto'),
+(3, 'camurça', 6, 710.00, 'marrom'),
+(4, 'couro', 5, 720.50, 'preto'),
+(1, 'nylon', 2, 620.00, 'rosa'),
+(5, 'sintético', 4, 690.25, 'branco'),
+(2, 'couro', 6, 730.00, 'vinho'),
+(6, 'nylon', 3, 655.50, 'verde'),
+(4, 'sintético', 5, 705.00, 'cinza'),
+(7, 'couro trançado', 5, 715.20, 'bege'),
+(8, 'nylon reforçado', 4, 670.00, 'laranja'),
+(9, 'sintético premium', 6, 725.00, 'dourado'),
+(10, 'couro', 3, 685.80, 'prata'),
+(11, 'nylon', 5, 695.00, 'roxo'),
+(12, 'camurça', 4, 702.10, 'amarelo'),
+(3, 'sintético', 5, 699.00, 'turquesa'),
+(5, 'couro', 6, 740.50, 'grafite'),
+(8, 'nylon', 2, 630.00, 'magenta'),
+(1, 'sintético', 4, 682.00, 'preto fosco');

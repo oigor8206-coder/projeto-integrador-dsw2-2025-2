@@ -173,7 +173,7 @@ app.put("/api/encomendas/:id", async (req, res) => {
         // Atualiza ambos os campos sempre (sem manter valores antigos).
         const { rows } = await pool.query(
             'UPDATE encomendas SET 
-            usuarios_id= $1
+            usuarios_id= $1,
             material= $2
             chumbo= $3  
             peso_laco= $4

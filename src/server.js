@@ -172,28 +172,28 @@ app.put("/api/encomendas/:id", async (req, res) => {
     try {
         // Atualiza ambos os campos sempre (sem manter valores antigos).
         const { rows } = await pool.query(
-            'UPDATE encomendas SET 
-            usuarios_id= $1,
-            material= $2
-            chumbo= $3  
-            peso_laco= $4
-            cor= $5
+            `UPDATE encomendas SET 
+                usuarios_id= $1,
+                material= $2,
+                chumbo= $3,  
+                peso_laco= $4,
+                cor= $5
             WHERE id = $6
-            RETURNING *',
-            [usuarios_id, material, chumbo,  peso_laco, cor]
+            RETURNING *`,
+            [usuarios_id, material, chumbo,  peso_laco, cor, id]
         );
 
         // Se não atualizou nenhuma linha, o id não existia.
         if (!rows[0]) return res.status(404).json({ erro: "não encontrado" });
 
-        res.json(rows[0]); // retorna o produto atualizado
-    } catch {
-        res.status(500).json({ erro: "erro interno" });
+        res.json(rows[0]); // retorna o encomendas atualizado
+    } catch (error)  {
+        res.status(500).json({ erro: error });
     }
 });
 
 // -----------------------------------------------------------------------------
-// ATUALIZAR PARCIALMENTE (PATCH /produtos/:id)
+// ATUALIZAR PARCIALMENTE (PATCH /encomendas/:id)
 // -----------------------------------------------------------------------------
 // Objetivo: atualizar APENAS os campos enviados.
 // Regras:
@@ -202,9 +202,9 @@ app.put("/api/encomendas/:id", async (req, res) => {
 // Como fazemos isso no SQL?
 // - COALESCE(a, b) devolve "a" quando "a" NÃO é NULL; caso seja NULL, devolve "b".
 // - Então passamos "null" para campos não enviados, e o COALESCE usa o valor atual do banco.
-app.patch("/produtos/:id", async (req, res) => {
+app.patch("/api/encomendas/:id", async (req, res) => {
     const id = Number(req.params.id);
-    const { nome, preco } = req.body ?? {};
+    const { usuarios_id, material, chumbo,  peso_laco, cor } = req.body ?? {};
 
     // Validação do id
     if (!Number.isInteger(id) || id <= 0) {
@@ -212,26 +212,51 @@ app.patch("/produtos/:id", async (req, res) => {
     }
 
     // Se nenhum campo foi enviado, não há o que atualizar.
-    if (nome === undefined && preco === undefined) {
-        return res.status(400).json({ erro: "envie nome e/ou preco" });
+    if (usuarios_id === undefined &&
+        material === undefined &&
+        chumbo === undefined &&
+        peso_laco === undefined &&
+        cor === undefined
+    ) {
+        return res.status(400).json({ erro: "É necessario enviar um dado para atualizar" });
     }
 
-    // Validamos "preco" somente se ele foi enviado.
-    // Se não foi enviado, manteremos "p = null" para avisar o COALESCE a não mexer no preço.
-    let p = null;
-    if (preco !== undefined) {
-        p = Number(preco);
-        if (Number.isNaN(p) || p < 0) {
-            return res.status(400).json({ erro: "preco deve ser número >= 0" });
+    let c = null;
+    if (chumbo !== undefined) {
+        c = Number(chumbo);
+        if (Number.isNaN(c) || c < 0) {
+            return res.status(400).json({ erro: "chumbo deve ser maior que 0" });
         }
     }
+
+    let peso = null;
+    if (peso_laco !== undefined) {  
+        peso = Number(peso_laco);
+        if (Number.isNaN(peso) || peso < 0) {
+            return res.status(400).json({ erro: "peso deve ser maior que 0" });
+        }
+    }
+
+    let user_id = null;
+    if (usuarios_id !== undefined) {    
+        user_id = Number(usuarios_id);        
+        if (Number.isNaN(user_id) || user_id < 1) {
+            return res.status(400).json({ erro: "usuario_id deve ser maior que 0" });
+        }
+    } 
 
     try {
         // Para "nome": se não veio (undefined), usamos nome ?? null → null
         // No SQL: COALESCE($1, nome) manterá o valor antigo quando $1 for NULL.
         const { rows } = await pool.query(
-            "UPDATE produtos SET nome = COALESCE($1, nome), preco = COALESCE($2, preco) WHERE id = $3 RETURNING *",
-            [nome ?? null, p, id]
+            `UPDATE encomendas SET
+             usuarios_id = COALESCE($1, usuarios_id), 
+             material = COALESCE($2, material), 
+             chumbo  = COALESCE($3, chumbo), 
+             peso_laco  = COALESCE($4, peso_laco),
+             cor = COALESCE($5, cor)
+            WHERE id = $6 RETURNING *`,
+            [usuarios_id ?? null, material ?? null, chumbo ?? null, peso_laco ?? null, cor ?? null, id]
         );
 
         if (!rows[0]) return res.status(404).json({ erro: "não encontrado" });
@@ -242,11 +267,11 @@ app.patch("/produtos/:id", async (req, res) => {
 });
 
 // -----------------------------------------------------------------------------
-// DELETAR (DELETE /produtos/:id)
+// DELETAR (DELETE /encomendas/:id)
 // -----------------------------------------------------------------------------
 // Objetivo: remover um produto existente.
 // Retornamos 204 No Content quando dá certo (sem corpo na resposta).
-app.delete("/produtos/:id", async (req, res) => {
+app.delete("/api/encomendas/:id", async (req, res) => {
     const id = Number(req.params.id);
 
     if (!Number.isInteger(id) || id <= 0) {
@@ -255,7 +280,7 @@ app.delete("/produtos/:id", async (req, res) => {
 
     try {
         // RETURNING id nos permite saber se algo foi realmente deletado.
-        const r = await pool.query("DELETE FROM produtos WHERE id = $1 RETURNING id", [id]);
+        const r = await pool.query("DELETE FROM encomendas WHERE id = $1 RETURNING id", [id]);
 
         // r.rowCount é o número de linhas afetadas. Se 0, o id não existia.
         if (!r.rowCount) return res.status(404).json({ erro: "não encontrado" });
